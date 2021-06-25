@@ -7,6 +7,7 @@ package it.polito.tdp.crimes;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.crimes.model.Adiacenze;
 import it.polito.tdp.crimes.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,7 +35,7 @@ public class FXMLController {
     private Button btnAnalisi; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxArco"
-    private ComboBox<?> boxArco; // Value injected by FXMLLoader
+    private ComboBox<Adiacenze> boxArco; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnPercorso"
     private Button btnPercorso; // Value injected by FXMLLoader
@@ -44,6 +45,12 @@ public class FXMLController {
 
     @FXML
     void doCalcolaPercorso(ActionEvent event) {
+    	txtResult.clear();
+    	Adiacenze a = boxArco.getValue();
+    	if(a!=null) {
+    		this.model.cerca(a);
+    		txtResult.appendText(this.model.getSoluzione().toString());
+    	}
 
     }
 
@@ -57,12 +64,15 @@ public class FXMLController {
     			
     			this.model.creaGrafo(Categoria, mese);
     			txtResult.appendText(this.model.getAdiacenzePeso());
+    			boxArco.getItems().addAll(model.getAdiacenzeP());
+    			
     		}
     	}
     	
     	
 
     }
+    
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {

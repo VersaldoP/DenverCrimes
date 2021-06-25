@@ -18,6 +18,7 @@ public class Model {
 	 private Graph<String,DefaultWeightedEdge> grafo;
 	 private List<Adiacenze> archi;
 	 private List<Adiacenze> archiPeso;
+	 private List<String> soluzione;
 	 
 	 public void creaGrafo(String id,int m) {
 		 grafo = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
@@ -52,6 +53,9 @@ public class Model {
 		}
 		return re;
 	}
+	public List<Adiacenze> getAdiacenzeP() {
+		return archiPeso;
+	}
 	
 	
 	public List<String> getAllCategory() {
@@ -61,11 +65,78 @@ public class Model {
 		return dao.listAllMonth();
 	}
 	
+	public void cerca(Adiacenze a) {
+		 String v1 = a.getId1();
+		 String v2 = a.getId2();
+		 soluzione = new ArrayList<>();
+		 List<String> parziale = new ArrayList<>();
+		 parziale.add(v1);
+		ricorsivo(parziale,v2);
+		// ricorsivo1(parziale,v2,0);
+		 
+		 
+	}
+
+
+
+	private void ricorsivo(List<String> parziale, String v2) {
+		if(parziale.get(parziale.size()-1).equals(v2)) {
+			if(parziale.size()>soluzione.size()) {
+				this.soluzione=new ArrayList<>(parziale);
+				return;
+			} 
+			return;
+		}
+		else {
+		String ultimo = parziale.get(parziale.size()-1);
+		List<String> vertVicini = Graphs.neighborListOf(this.grafo, ultimo);
+		
+		for(String s:vertVicini) {
+			
+			if(!parziale.contains(s)) {
+				parziale.add(s);
+				ricorsivo(parziale, v2);
+				parziale.remove(parziale.size()-1);
+			}
+			
+			
+			
+			
+		}
+		}
+		
+		
+	}
+	public List<String> getSoluzione(){
+		return soluzione;
+	}
 	
+	private void ricorsivo1(List<String> parziale, String v2,int liv) {
+		if(parziale.get(liv).equals(v2)) {
+			if(parziale.size()>soluzione.size()) {
+				this.soluzione=new ArrayList<>(parziale);
+				return;
+			} 
+			return;
+		}
+		else {
+		String ultimo = parziale.get(liv);
+		List<String> vertVicini = Graphs.neighborListOf(this.grafo, ultimo);
+		
+		for(String s:vertVicini) {
+			
+			if(!parziale.contains(s)) {
+				parziale.add(s);
+				ricorsivo1(parziale, v2,liv++);
+				parziale.remove(liv);
+			}
+			
+			
+			
+			
+		}
+	}
 	
-	
-	
-	
-	
+	}
 	
 }

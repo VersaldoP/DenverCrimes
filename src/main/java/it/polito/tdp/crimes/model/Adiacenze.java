@@ -21,7 +21,7 @@ public class Adiacenze {
 	}
 	@Override
 	public String toString() {
-		return "Adiacenze" + id1 + "," + id2 + " peso=" + peso + "\n";
+		return  id1 + "->" + id2 + " peso=" + peso + "\n";
 	}
 	
 	
