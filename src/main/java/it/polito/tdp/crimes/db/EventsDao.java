@@ -53,5 +53,67 @@ public class EventsDao {
 			return null ;
 		}
 	}
+	
+	public List<String> listAllCategoryId(){
+		String sql = "SELECT DISTINCT e.offense_category_id "
+				+ "FROM EVENTS  e " ;
+		try {
+			Connection conn = DBConnect.getConnection() ;
 
+			PreparedStatement st = conn.prepareStatement(sql) ;
+			
+			List<String> list = new ArrayList<>() ;
+			
+			ResultSet res = st.executeQuery() ;
+			
+			while(res.next()) {
+				try {
+					list.add(res.getString("offense_category_id"));
+				} catch (Throwable t) {
+					t.printStackTrace();
+					System.out.println(res.getInt("id"));
+				}
+			}
+			
+			conn.close();
+			return list ;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null ;
+		}
+	}
+	
+	public List<Integer> listAllMonth(){
+		String sql = "SELECT DISTINCT MONTH(e.reported_date) as mounth "
+				+ "FROM EVENTS e "
+				+ "order by MONTH(e.reported_date) ASC ";
+		try {
+			Connection conn = DBConnect.getConnection() ;
+
+			PreparedStatement st = conn.prepareStatement(sql) ;
+			
+			List<Integer> list = new ArrayList<>() ;
+			
+			ResultSet res = st.executeQuery() ;
+			
+			while(res.next()) {
+				try {
+					list.add(res.getInt("mounth"));
+				} catch (Throwable t) {
+					t.printStackTrace();
+					
+				}
+			}
+			
+			conn.close();
+			return list ;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null ;
+		}
+	}
 }
