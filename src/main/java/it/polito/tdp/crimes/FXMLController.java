@@ -49,6 +49,18 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
+    	txtResult.clear();
+    	String Categoria = boxCategoria.getValue();
+    	if(Categoria!=null) {
+    		int mese =boxMese.getValue();
+    		if(mese!=0) {
+    			
+    			this.model.creaGrafo(Categoria, mese);
+    			txtResult.appendText(this.model.getAdiacenzePeso());
+    		}
+    	}
+    	
+    	
 
     }
 
