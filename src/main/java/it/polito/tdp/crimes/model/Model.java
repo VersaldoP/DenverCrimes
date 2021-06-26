@@ -115,7 +115,7 @@ public class Model {
 		if(parziale.get(liv).equals(v2)) {
 			if(parziale.size()>soluzione.size()) {
 				this.soluzione=new ArrayList<>(parziale);
-				return;
+			
 			} 
 			return;
 		}
